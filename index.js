@@ -9,49 +9,44 @@ const inquire = require("inquirer");
 const validator = require("validator");
 const fs = require('fs');
 
-
-// constant questions.  not expecting to have any changes.
-const questions = [
-  "\n============================\n May I have your user name?\n============================\n",
-  "\n============================\n and email address?\n============================\n",
-  "\n============================\n Tiltle of the project?\n============================\n", 
-  "\n============================\n A short description:\n============================\n",
-  "\n============================\n Installation steps:\n============================\n",
-  "\n============================\n How to use it?\n============================\n",
-  "\n============================\n Any license?\n============================\n",
-  "\n============================\n Contributing?\n============================\n",
-  "\n============================\n Tests\n============================\n",
-];
-
-// constant licenses.  not expecting to have any changes.
-const licenses = [
-  "WTFPL",
-  "MIT",
-  "BSD 3-Clause",
-  "CC0",
-  "GNU GPL v3",
-  "No license"
+// avialable shapes of the logo.  not expecting to have any changes.
+const logoShapes = [
+  "Circle",
+  "Rectangle",
+  "Triangle"
 ]
 
 // function writeToFile(data)
 // write data to ./md/README.md
 // parameter:
 //   data: string, contains the whole README.md content returned from generateMarkdown
-function writeToFile(data) {
-  fs.writeFile("./examples/logo.svg", data, (err) =>
-    err ? console.log(err) : console.log(color.rainbow("\nSee ya!")));
-}
+// function writeToFile(data) {
+//   fs.writeFile("./examples/logo.svg", data, (err) =>
+//     err ? console.log(err) : console.log("\n\nGenerated logo.svg in folder ./examples/"));
+// }
 
 
 // function checkEmpty(str)
 // validate str on whether the user entered something.  Used by the prompts.
 // parameter:
 //   str: string, the user's current input
-function checkEmpty(str) {
-  if (!validator.isEmpty(str.trim())) {
+function checkText(str) {
+  if (!validator.isEmpty(str.trim()) && str.trim().length < 4) {
     return true;
   }
-  return color.bgRed("You must enter something.  Try again");
+  return "You must enter something up to 3 characters.  Try again.";
+}
+
+// function checkEmpty(str)
+// validate str on whether the user entered something.  Used by the prompts.
+// parameter:
+//   str: string, the user's current input
+function checkColor(str) {
+  const regex = new RegExp(/[0-9a-f]{6}/i);
+  if (regex.test(str)) {
+    return true;
+  }
+  return "Make sure it's a 6 digit hexadecimal(0-9, A-F) number. Try again.";
 }
 
 // function collectReadme()
@@ -60,35 +55,34 @@ function collectSVGInfo() {
   inquire.prompt([
     {
       type: 'input',
-      message: color.inverse(questions[4]),
-      name: "installation",
-      validate: checkEmpty,
+      message: "\nUp to 3 characters for the logo text:",
+      name: "text",
+      validate: checkText,
     },
     {
       type: 'input',
-      message: color.inverse(questions[5]),
-      name: "usage",
-      validate: checkEmpty,
+      message: "\nColor of the logo text in 6 digit hexdecimal number:",
+      name: "textColor",
+      validate: checkColor,
     },
     {
       type: 'list',
-      message: color.inverse(questions[6]),
-      name: "license",
-      choices: licenses,
-      validate: checkEmpty,
+      message: "\nPick a shape for the logo:\n",
+      name: "shape",
+      choices: logoShapes,
     },
     {
       type: 'input',
-      message: color.inverse(questions[7]),
-      name: "contributing",
-      validate: checkEmpty,
+      message: "\nColor of the shape in 6 digit hexadecimal number:",
+      name: "shapeColor",
+      validate: checkColor,
     },
   ])
-  .then((logo) => 
-    toSVG(logo))
-  .then((svg) =>
-    writeToFile(svg)
-  )
+  // .then((logo) => 
+  //   toSVG(logo))
+  // .then((svg) =>
+  //   writeToFile(svg)
+  // )
   .catch((error) => 
      console.log(error)
   );
@@ -97,7 +91,7 @@ function collectSVGInfo() {
 // function init()
 // Prep the user regarding what this is then invoke collectReadme to start generating README.md.
 function init() {
-  console.log("\nGenerated logo.svg in folder ./examples/");
+  console.log("\nThis is a .SVG logo generator.  You can enter up to 3 letters logo text, pick a shape and assign color for each.");
   collectSVGInfo();
 }
 
