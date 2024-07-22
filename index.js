@@ -82,7 +82,6 @@ function collectSVGInfo() {
   .then((logo) => {
     const {text, textColor, shape, shapeColor} = logo;
     const svg = new Shape[shape](text, textColor, shape, shapeColor).render();
-    console.log(svg);
     return svg;
   })
   .then((svg) =>
