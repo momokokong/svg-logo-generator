@@ -43,7 +43,7 @@ function checkText(str) {
 // parameter:
 //   str: string, the user's current input
 function checkColor(str) {
-  const regex = new RegExp(/[0-9a-f]{6}/i);
+  const regex = new RegExp(/^[0-9a-f]{6}$/i);
   if (regex.test(str)) {
     return true;
   }
