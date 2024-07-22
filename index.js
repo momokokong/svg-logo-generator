@@ -8,6 +8,7 @@
 const inquire = require("inquirer");
 const validator = require("validator");
 const fs = require('fs');
+const Shape = require("./lib/shapes.js");
 
 // avialable shapes of the logo.  not expecting to have any changes.
 const logoShapes = [
@@ -20,10 +21,10 @@ const logoShapes = [
 // write data to ./md/README.md
 // parameter:
 //   data: string, contains the whole README.md content returned from generateMarkdown
-// function writeToFile(data) {
-//   fs.writeFile("./examples/logo.svg", data, (err) =>
-//     err ? console.log(err) : console.log("\n\nGenerated logo.svg in folder ./examples/"));
-// }
+function writeToFile(data) {
+  fs.writeFile("./examples/logo.svg", data, (err) =>
+    err ? console.log(err) : console.log("\n\nGenerated logo.svg in the folder ./examples/"));
+}
 
 
 // function checkEmpty(str)
@@ -78,11 +79,15 @@ function collectSVGInfo() {
       validate: checkColor,
     },
   ])
-  // .then((logo) => 
-  //   toSVG(logo))
-  // .then((svg) =>
-  //   writeToFile(svg)
-  // )
+  .then((logo) => {
+    const {text, textColor, shape, shapeColor} = logo;
+    const svg = new Shape[shape](text, textColor, shape, shapeColor).render();
+    console.log(svg);
+    return svg;
+  })
+  .then((svg) =>
+    writeToFile(svg)
+  )
   .catch((error) => 
      console.log(error)
   );
