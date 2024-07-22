@@ -1,8 +1,8 @@
 // index.js
-// This file is the starting point of the README generator which prepares the required modules, 
-// initialize constant variables, set up prompts and validations, then call the generateMarkdown module
-// to process user inputs and save the generated README.md in ./md/ 
-// The generator requires npm modules inquirer, colors, validator, and EM6 module fs, and a self-made module generateMarkdown.
+// This file is the starting point of the SVG generator which prepares the required modules, 
+// initialize constant variables, set up prompts and validations, then call the Shape module to create the SVG elements.
+// Eventually save the generated SVG in ./examples/ 
+// The generator requires npm modules inquirer, validator, and EM6 module fs, and a self-made module Shape.
 
 // init the modules as global variables
 const inquire = require("inquirer");
@@ -20,15 +20,15 @@ const logoShapes = [
 // function writeToFile(data)
 // write data to ./md/README.md
 // parameter:
-//   data: string, contains the whole README.md content returned from generateMarkdown
+//   data: string, contains the whole SVG XML element
 function writeToFile(data) {
   fs.writeFile("./examples/logo.svg", data, (err) =>
     err ? console.log(err) : console.log("\n\nGenerated logo.svg in the folder ./examples/"));
 }
 
 
-// function checkEmpty(str)
-// validate str on whether the user entered something.  Used by the prompts.
+// function checkText(str)
+// validate str on whether the user entered something and is less than 4 chars.  Used by the prompts.
 // parameter:
 //   str: string, the user's current input
 function checkText(str) {
@@ -38,8 +38,8 @@ function checkText(str) {
   return "You must enter something up to 3 characters.  Try again.";
 }
 
-// function checkEmpty(str)
-// validate str on whether the user entered something.  Used by the prompts.
+// function checkColor(str)
+// validate str on whether the user entered an valid 6 digit hexadecimal number.  Used by the prompts.
 // parameter:
 //   str: string, the user's current input
 function checkColor(str) {
@@ -50,9 +50,9 @@ function checkColor(str) {
   return "Make sure it's a 6 digit hexadecimal(0-9, A-F) number. Try again.";
 }
 
-// function collectReadme()
-// invoke prompts to collect user inputs, then invoke generateMarkdown to generate the string content and pass that to writeToFile.
-function collectSVGInfo() {
+// function collectSVGInfo()
+// invoke prompts to collect the SVG info, call the selected Shape module to generate the SVG XML then write to file 
+function createSVG() {
   inquire.prompt([
     {
       type: 'input',
@@ -93,10 +93,10 @@ function collectSVGInfo() {
 }
 
 // function init()
-// Prep the user regarding what this is then invoke collectReadme to start generating README.md.
+// Prep the user and initiate the generator
 function init() {
   console.log("\nThis is a .SVG logo generator.  You can enter up to 3 letters logo text, pick a shape and assign color for each.");
-  collectSVGInfo();
+  createSVG();
 }
 
 // Function call to initialize app
