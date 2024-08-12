@@ -13,7 +13,7 @@
   - [Screenshot](#Screenshot)
 
 ## Description
-This is a SVG generator that quickly create a logo.svg. 
+[Demo video](https://drive.google.com/file/d/1sxXX6SR0ZN1YLH8ni8gk_sF3wFQpLEg4/view?usp=drive_link) This is a SVG generator that quickly create a logo.svg. 
 
 ## Installation
 - The generator requires npm.  [See Node.js installation.](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
@@ -26,12 +26,12 @@ This is a SVG generator that quickly create a logo.svg.
      - `npm i inquirer@8.2.4`
 4. Ready to use after the modules are installed
 
-
 ## Usage
 1. Once the modules are installed, start the generator by `node index.js` in the terminal.
 2. Follow the on-screen instructions.
    - It validate user inputs.  For the text it take non-empty string up to 3 characters.  For color it takes 6 digit hexadecimal number.
 3. The output logo.svg will be in the folder ./examples/.
+4. A video walkthrough: https://github.com/momokokong/svg-logo-generator
 
 ## Tests
 1. At where the index.js is in the terminal, `npm run test`.
