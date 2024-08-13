@@ -2,7 +2,7 @@
 [![License: WTFPL](https://img.shields.io/badge/License-WTFPL-brightgreen.svg)](http://www.wtfpl.net/about/)
 
 ## Table of content
-- readme-generator-CLI
+- svg-logo-generator
   - [Description](#Description)
   - [Installation](#Installation)
   - [Usage](#Usage)
